@@ -10,6 +10,10 @@ class SwerveTest extends LinearOpMode {
 
     public DcMotor motorA;
     public DcMotor motorB;
+    public DcMotor motorC;
+    public DcMotor motorD;
+    public DcMotor motorE;
+    public DcMotor motorF;
     float aInput;
     float bInput;
 
@@ -28,7 +32,10 @@ class SwerveTest extends LinearOpMode {
     public void runOpMode() {
         motorA = hardwareMap.get(DcMotor.class, "A");
         motorB = hardwareMap.get(DcMotor.class, "B");
-
+        motorC = hardwareMap.get(DcMotor.class, "C");
+        motorD = hardwareMap.get(DcMotor.class, "D");
+        motorE = hardwareMap.get(DcMotor.class, "E");
+        motorF = hardwareMap.get(DcMotor.class, "F");
         // Put initialization blocks here.
         waitForStart();
         if (opModeIsActive()) {
@@ -39,6 +46,10 @@ class SwerveTest extends LinearOpMode {
                 motorB.setDirection(DcMotorSimple.Direction.FORWARD);
                 motorA.setPower(aInput);
                 motorB.setPower(bInput);
+                motorC.setPower(aInput);
+                motorD.setPower(bInput);
+                motorE.setPower(aInput);
+                motorF.setPower(bInput);
                 telemetry.update();
             }
         }
