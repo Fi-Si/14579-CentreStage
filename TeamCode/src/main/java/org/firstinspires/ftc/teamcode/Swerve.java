@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "SwerveTest (Blocks to Java)")
-public class SwerveTest extends LinearOpMode {
+class SwerveTest extends LinearOpMode {
 
-    private DcMotor motorA;
-    private DcMotor motorB;
+    public DcMotor motorA;
+    public DcMotor motorB;
     float aInput;
     float bInput;
 
