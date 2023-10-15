@@ -38,8 +38,8 @@ public class MechanumDrivebase extends LinearOpMode {
             // Remember, Y stick value is reversed
             y = -gamepad1.left_stick_y;
             // Factor to counteract imperfect strafing
-            x = gamepad1.left_stick_x * -1.1;
-            rx = gamepad1.right_stick_x;
+            x = gamepad1.right_stick_x * -1.1;
+            rx = gamepad1.left_stick_x;
             // Denominator is the largest motor power (absolute value) or 1.
             // This ensures all powers maintain the same ratio, but only if one is outside of the range [-1, 1].
             denominator = JavaUtil.maxOfList(JavaUtil.createListWith(JavaUtil.sumOfList(JavaUtil.createListWith(Math.abs(y), Math.abs(x), Math.abs(rx))), 1));
