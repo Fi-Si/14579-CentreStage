@@ -28,16 +28,17 @@ public class module {
     double ErrorCorrection;
 
 public void hardwareMap() {
+    M2 = hardwareMap.get(DcMotor.class, "M2");
+    M1 = hardwareMap.get(DcMotor.class, "M1");
+    M2.setDirection(DcMotor.Direction.REVERSE);
 
 
 }
 
     public void driveToModule(double velocity, int DesiredAngle) {
 
-        M2 = hardwareMap.get(DcMotor.class, "M2");
-        M1 = hardwareMap.get(DcMotor.class, "M1");
+
         // Put initialization blocks here.
-        M2.setDirection(DcMotor.Direction.REVERSE);
         C1 = 5;
         C2 = 0;
         MaxVelocity = 1;

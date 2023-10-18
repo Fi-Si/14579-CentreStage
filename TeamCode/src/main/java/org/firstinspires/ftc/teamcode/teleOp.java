@@ -8,6 +8,7 @@ public class teleOp extends Robot{
     @Override
     public void init() {
         hardwareInit();
+        Module.hardwareMap();
     }
 
     @Override
