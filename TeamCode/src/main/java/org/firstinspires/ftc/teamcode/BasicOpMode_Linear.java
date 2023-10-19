@@ -56,6 +56,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
 
+
+
+
+
+
+
         AprilTagProcessor.Builder myAprilTagProcessorBuilder;
         AprilTagProcessor myAprilTagProcessor;
 
@@ -338,13 +344,22 @@ public class BasicOpMode_Linear extends LinearOpMode {
                 telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
                 telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
+            telemetry.update();
         }   // end for() loop
 
         // Add "key" information to telemetry
+        /*
         telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
         telemetry.addLine("RBE = Range, Bearing & Elevation");
-        telemetry.addData("Range", AprilTagDetection.ftcPose.range);
+        telemetry.addData("Range", );
+        telemetry.addData("Bearing", AprilTagDetection.ftcPose.bearing);
+        telemetry.addData("Elevation", AprilTagDetection.ftcPose.elevation);
+        telemetry.addData("Pitch", AprilTagDetection.ftcPose.pitch);
+        telemetry.addData("Roll", AprilTagDetection.ftcPose.roll);
+        telemetry.addData("Yaw", AprilTagDetection.ftcPose.yaw);
+        */
+
 
 
 
