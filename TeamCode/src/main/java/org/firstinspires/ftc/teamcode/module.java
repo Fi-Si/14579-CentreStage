@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class module {
 
-    private DcMotor M2;
-    private DcMotor M1;
+     DcMotor M2;
+     DcMotor M1;
 
 
     int MaxVelocity;
@@ -28,9 +28,7 @@ public class module {
     double ErrorCorrection;
 
 public void hardwareMap() {
-    M2 = hardwareMap.get(DcMotor.class, "M2");
-    M1 = hardwareMap.get(DcMotor.class, "M1");
-    M2.setDirection(DcMotor.Direction.REVERSE);
+
 
 
 }
