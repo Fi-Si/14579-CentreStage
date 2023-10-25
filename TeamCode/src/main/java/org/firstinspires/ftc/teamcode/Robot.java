@@ -24,12 +24,12 @@ public swerveKinematics Kinematics = null;
 public module Module = null;
 
     public void hardwareInit() {
-       /* List<LynxModule> allHubs;
+        List<LynxModule> allHubs;
         allHubs = hardwareMap.getAll(LynxModule.class);
 
         for (LynxModule hub: allHubs) {
         hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
-        } */
+        }
                 List<DcMotorEx> modules;
 
         //Module 1 Motors
