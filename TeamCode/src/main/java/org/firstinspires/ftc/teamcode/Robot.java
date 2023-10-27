@@ -49,9 +49,19 @@ public module Module = null;
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
         Kinematics = new swerveKinematics();
-        Module = new module();
+        Module = new module(module1a, module1b);
 
     }
 
+    // Create a Main class
+   /* public class Main {
+            public Main() {
 
-}
+        }
+
+        public static void main(String[] args) {
+            Main myObj = new Main(); // Create an object of class Main (This will call the constructor)
+            System.out.println(myObj.x); // Print the value of x
+        }
+    */ }
+

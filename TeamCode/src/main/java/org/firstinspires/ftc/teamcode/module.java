@@ -14,6 +14,9 @@ public class module {
      DcMotor M1;
 
 
+
+
+
     int MaxVelocity;
 
     double ErrorR;
@@ -26,12 +29,19 @@ public class module {
     int DesiredAngleR;
     int DesiredAngleL;
     double ErrorCorrection;
+public module(DcMotor motor1, DcMotor motor2) {
 
-public void hardwareMap() {
-
-
+    M1 = motor1;
+    M2 = motor2;
 
 }
+//public void hardwareMap() {
+
+
+  //  M1 = hardwareMap.get(DcMotor.class, "M1");
+    //M2  = hardwareMap.get(DcMotor.class, "M2");
+
+//}
 
     public void driveToModule(double velocity, int DesiredAngle) {
 
@@ -59,14 +69,17 @@ public void hardwareMap() {
         }
         ErrorCorrection = Error2 * C1 + C2;
 
-        M1.setPower(velocity + ErrorCorrection);
+//        M1.setPower(velocity + ErrorCorrection);
+        M1.setPower(100);
         M2.setPower(velocity - ErrorCorrection);
-        telemetry.addData("ModuleAngle0-360", ModuleAngle0_360);
-        telemetry.addData("DesiredAngle", DesiredAngle);
-        telemetry.addData("Error", Error2 * 360);
-        telemetry.addData("ErrorR", ErrorR);
-        telemetry.addData("ErrorCorrection", ErrorCorrection);
-        telemetry.addData("Velocity", velocity);
-        telemetry.update();
+      //  telemetry.addData("ModuleAngle0-360", ModuleAngle0_360);    `
+      //  telemetry.addData("DesiredAngle", DesiredAngle);
+        //telemetry.addData("Error", Error2 * 360);
+        //telemetry.addData("ErrorR", ErrorR);
+        //telemetry.addData("ErrorCorrection", ErrorCorrection);
+        //telemetry.addData("Velocity", velocity);
+        //telemetry.update();
     }
+
+
 }
