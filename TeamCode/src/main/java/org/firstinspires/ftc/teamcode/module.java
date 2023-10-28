@@ -13,6 +13,9 @@ public class module {
      DcMotor M2;
      DcMotor M1;
 
+     DcMotor module2a;
+     DcMotor module2b;
+
 
 
 

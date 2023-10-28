@@ -37,19 +37,20 @@ public module Module = null;
         module1b = hardwareMap.get(DcMotorEx.class, "M2");
         module1b.setDirection(DcMotorSimple.Direction.REVERSE);
         //Module 2 Motors
-      //  module2a = hardwareMap.get(DcMotorEx.class, "module2a");
-       // module2b = hardwareMap.get(DcMotorEx.class, "module2b");
-        //Lift Motors
+        module2a = hardwareMap.get(DcMotorEx.class, "module2a");
+       module2b = hardwareMap.get(DcMotorEx.class, "module2b");
+      //Lift Motors
        // lift1 = hardwareMap.get(DcMotorEx.class, "lift1");
        // lift2 = hardwareMap.get(DcMotorEx.class, "Lift2");
 
-        modules = Arrays.asList(module1a, module1b/* , module2a, module2b */);
+        modules = Arrays.asList(module1a, module1b , module2a, module2b );
         for(DcMotorEx motor: modules) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
         Kinematics = new swerveKinematics();
         Module = new module(module1a, module1b);
+
 
     }
 
