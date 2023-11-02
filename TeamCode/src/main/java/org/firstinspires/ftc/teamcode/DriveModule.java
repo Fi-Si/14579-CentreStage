@@ -21,7 +21,7 @@ public class DriveModule {
     // a WHEEL rev is when the wheel drives a distance equal to its circumference
 
     //TODO: modify this variable to match drive gear ratio
-    public final double TICKS_PER_MODULE_REV = 28 * (double)(60)/11 * (double)(48)/15 * (double)(82)/22 * 2; //ticks per MODULE revolution
+    public final double TICKS_PER_MODULE_REV = 1750/3; //ticks per MODULE revolution
     public final double DEGREES_PER_TICK = 360/TICKS_PER_MODULE_REV;
 
     //TODO: modify this variable to match drive gear ratio
