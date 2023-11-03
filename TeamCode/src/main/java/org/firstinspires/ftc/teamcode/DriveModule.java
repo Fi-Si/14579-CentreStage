@@ -25,7 +25,7 @@ public class DriveModule {
     public final double DEGREES_PER_TICK = 360/TICKS_PER_MODULE_REV;
 
     //TODO: modify this variable to match drive gear ratio
-    public final double TICKS_PER_WHEEL_REV = 28 * (double)(60)/11 * (double)(48)/15 * (double)(82)/22 * (double)(14)/60; //ticks per WHEEL revolution
+    public final double TICKS_PER_WHEEL_REV = 414/2; //ticks per WHEEL revolution (I Think)
 
     public final double CM_WHEEL_DIAMETER = 3 * 2.5;
     public final double CM_PER_WHEEL_REV = CM_WHEEL_DIAMETER * Math.PI;
