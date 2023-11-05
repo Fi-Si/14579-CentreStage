@@ -25,7 +25,7 @@ public class DriveModule {
     public final double DEGREES_PER_TICK = 360/TICKS_PER_MODULE_REV;
 
     //TODO: modify this variable to match drive gear ratio
-    public final double TICKS_PER_WHEEL_REV = 414/2; //ticks per WHEEL revolution (I Think)
+    public final double TICKS_PER_WHEEL_REV = 414/2; //ticks per WHEEL revolution
 
     public final double CM_WHEEL_DIAMETER = 3 * 2.5;
     public final double CM_PER_WHEEL_REV = CM_WHEEL_DIAMETER * Math.PI;
@@ -38,7 +38,7 @@ public class DriveModule {
     public final double ALLOWED_MODULE_ORIENTATION_ERROR = 5;
 
     //TODO: tune this variable (see commented out section in TeleOp)
-    public final double ROT_ADVANTAGE = 1; //max rotation power divided by max translation power (scaling factor)
+    public double ROT_ADVANTAGE = 1; //max rotation power divided by max translation power (scaling factor)
 
     //this variable is set to 0.7 because when in RUN_USING_ENCODERS mode, powers about ~0.7 are the same
     //setting to 1 may increase robot top speed, but may decrease accuracy
@@ -65,8 +65,8 @@ public class DriveModule {
             motor2 = robot.hardwareMap.dcMotor.get("R2b");
             positionVector = new Vector2d((double)280/2, 0); //points from robot center to right module
         } else {
-            motor1 = robot.hardwareMap.dcMotor.get("module1a");
-            motor2 = robot.hardwareMap.dcMotor.get("module1b");
+            motor1 = robot.hardwareMap.dcMotor.get("M1");
+            motor2 = robot.hardwareMap.dcMotor.get("M2");
             positionVector = new Vector2d((double)-280/2, 0); //points from robot center to left module
         }
 
