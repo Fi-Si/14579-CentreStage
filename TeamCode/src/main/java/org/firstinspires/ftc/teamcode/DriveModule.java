@@ -21,11 +21,11 @@ public class DriveModule {
     // a WHEEL rev is when the wheel drives a distance equal to its circumference
 
     //TODO: modify this variable to match drive gear ratio
-    public final double TICKS_PER_MODULE_REV = 1750/3; //ticks per MODULE revolution
-    public final double DEGREES_PER_TICK = 360/TICKS_PER_MODULE_REV;
+    public double TICKS_PER_MODULE_REV = 1120; //ticks per MODULE revolution
+    public double DEGREES_PER_TICK = 360/TICKS_PER_MODULE_REV;
 
     //TODO: modify this variable to match drive gear ratio
-    public final double TICKS_PER_WHEEL_REV = 414/2; //ticks per WHEEL revolution
+    public final double TICKS_PER_WHEEL_REV = 207; //ticks per WHEEL revolution
 
     public final double CM_WHEEL_DIAMETER = 3 * 2.5;
     public final double CM_PER_WHEEL_REV = CM_WHEEL_DIAMETER * Math.PI;
@@ -74,8 +74,8 @@ public class DriveModule {
         lastMotor2Encoder = motor2.getCurrentPosition();
 
         //set run mode to NOT use encoders for velocity PID regulation
-        motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -191,10 +191,10 @@ public class DriveModule {
 
         //this is to add sign to magnitude, which returns an absolute value
         if (motorPowersScaled[0].getAngleDouble(Angle.AngleType.NEG_180_TO_180_CARTESIAN) != MOTOR_1_VECTOR.getAngleDouble(Angle.AngleType.NEG_180_TO_180_CARTESIAN)) {
-            motor1power *= -1;
+            motor1power *= -1.2;
         }
         if (motorPowersScaled[1].getAngleDouble(Angle.AngleType.NEG_180_TO_180_CARTESIAN) != MOTOR_2_VECTOR.getAngleDouble(Angle.AngleType.NEG_180_TO_180_CARTESIAN)) {
-            motor2power *= -1;
+            motor2power *= -1.2;
         }
 
         robot.telemetry.addData(moduleSide + " Motor 1 Power: ", motor1power);
@@ -244,7 +244,7 @@ public class DriveModule {
         robot.telemetry.addData(moduleSide + "Motor 1 Encoder", motor1.getCurrentPosition());
         robot.telemetry.addData(moduleSide + "Motor 2 Encoder", motor2.getCurrentPosition());
         double rawAngle = (double)(motor2.getCurrentPosition() + motor1.getCurrentPosition())* DEGREES_PER_TICK; //motor2-motor1 makes ccw positive (?)
-        return new Angle(rawAngle, Angle.AngleType.ZERO_TO_360_HEADING);
+        return new Angle(rawAngle, Angle.AngleType.NEG_180_TO_180_HEADING);
     }
 
 

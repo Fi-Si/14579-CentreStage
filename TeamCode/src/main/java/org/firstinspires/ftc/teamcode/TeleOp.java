@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 public class TeleOp extends OpMode {
     Robot robot;
 
+
     //deadband for joysticks
     public double DEADBAND_MAG = 0.1;
     public Vector2d DEADBAND_VEC = new Vector2d(DEADBAND_MAG, DEADBAND_MAG);
@@ -39,14 +40,25 @@ public class TeleOp extends OpMode {
 
         //uncomment for live tuning of ROT_ADVANTAGE constant
         if (gamepad1.b) {
-            robot.driveController.moduleRight.ROT_ADVANTAGE += 0.01;
-            robot.driveController.moduleLeft.ROT_ADVANTAGE += 0.01;
+          robot.driveController.moduleRight.ROT_ADVANTAGE += 0.01;
+        robot.driveController.moduleLeft.ROT_ADVANTAGE += 0.01;
         }
         if (gamepad1.x) {
-            robot.driveController.moduleRight.ROT_ADVANTAGE -= 0.01;
+          robot.driveController.moduleRight.ROT_ADVANTAGE -= 0.01;
             robot.driveController.moduleLeft.ROT_ADVANTAGE -= 0.01;
         }
       telemetry.addData("ROT_ADVANTAGE: ", robot.driveController.moduleLeft.ROT_ADVANTAGE);
+
+
+        if(gamepad1.y) {
+            robot.driveController.moduleRight.TICKS_PER_MODULE_REV += 5;
+            robot.driveController.moduleLeft.TICKS_PER_MODULE_REV += 5;
+        }
+        if(gamepad1.a) {
+            robot.driveController.moduleRight.TICKS_PER_MODULE_REV -= 5;
+            robot.driveController.moduleLeft.TICKS_PER_MODULE_REV -= 5;
+        }
+        telemetry.addData("TICKS_PER_MODULE_REV: ", robot.driveController.moduleLeft.TICKS_PER_MODULE_REV);
 
 
         //to confirm that joysticks are operating properly

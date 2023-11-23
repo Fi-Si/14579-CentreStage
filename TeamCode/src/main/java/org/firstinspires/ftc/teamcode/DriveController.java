@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 
 public class DriveController {
     Robot robot;
@@ -15,6 +17,10 @@ public class DriveController {
     double previousRobotDistanceTraveled = 0;
     double moduleLeftLastDistance;
     double moduleRightLastDistance;
+
+    double velocity;
+
+    double AngleTelemetry;
 
     //tolerance for module rotation (in degrees)
     public final double ALLOWED_MODULE_ROT_ERROR = 5;
