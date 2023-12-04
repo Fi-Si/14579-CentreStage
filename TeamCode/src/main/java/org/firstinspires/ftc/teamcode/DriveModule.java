@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class DriveModule {
     Robot robot;
 
+    public double velocity;
+
     //TODO: make sure these motors are not flipped on your drive
-    DcMotor motor1; //top motor
-    DcMotor motor2; //bottom motor
+    DcMotorEx motor1; //top motor
+    DcMotorEx motor2; //bottom motor
 
     public final ModuleSide moduleSide;
     public final Vector2d positionVector; //position of module relative to robot COM (center of mass)
@@ -61,21 +64,21 @@ public class DriveModule {
         this.robot = robot;
         this.moduleSide = moduleSide;
         if (moduleSide == ModuleSide.RIGHT) {
-            motor1 = robot.hardwareMap.dcMotor.get("R2a");
-            motor2 = robot.hardwareMap.dcMotor.get("R2b");
-            positionVector = new Vector2d((double)280/2, 0); //points from robot center to right module
+            motor1 = robot.hardwareMap.get(DcMotorEx.class, "R2a");
+            motor2 = robot.hardwareMap.get(DcMotorEx.class, "R2a");
+            positionVector = new Vector2d((double)141.2, 0); //points from robot center to right module
         } else {
-            motor1 = robot.hardwareMap.dcMotor.get("M1");
-            motor2 = robot.hardwareMap.dcMotor.get("M2");
-            positionVector = new Vector2d((double)-280/2, 0); //points from robot center to left module
+            motor1 = robot.hardwareMap.get(DcMotorEx.class, "M1");
+            motor1 = robot.hardwareMap.get(DcMotorEx.class, "M2");
+            positionVector = new Vector2d((double)-141.2, 0); //points from robot center to left module
         }
 
         lastMotor1Encoder = motor1.getCurrentPosition();
         lastMotor2Encoder = motor2.getCurrentPosition();
 
         //set run mode to NOT use encoders for velocity PID regulation
-        motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         motor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
