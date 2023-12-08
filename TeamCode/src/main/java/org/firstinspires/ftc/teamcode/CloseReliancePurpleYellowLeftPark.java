@@ -10,11 +10,15 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.VisionProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+
+import java.util.List;
 
 @Autonomous(name = "CloseRedAlliancePurpleYellowLeftPark (Blocks to Java)")
-public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
+public class CloseReliancePurpleYellowLeftPark extends LinearOpMode {
 
     private DcMotor M1;
     private DcMotor EncoderA;
@@ -31,6 +35,8 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
     private DcMotor Lift1;
     private DcMotor Lift2;
     private CRServo IntakeR;
+    private TfodProcessor tfodprocessor;
+    private VisionPortal myVisionPortal;
 
     int RobotHeadingChange;
     double Diff1Rest;
@@ -38,6 +44,7 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
     float Yaw;
     float RightStickX;
     int LeftTrigger;
+    int RightTrigger;
     double RotationAuthority;
     int DesiredAngle;
     int EncoderDistA;
@@ -47,15 +54,25 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
     int C2;
     int ErrorBand;
     double SpeedOut;
+    int RotInvert;
+
 
     /**
      * This function is executed when this OpMode is selected from the Driver Station.
      */
     @Override
     public void runOpMode() {
-        VisionProcessor csVisionProcessor;
-        VisionPortal myVisionPortal;
-        int MaxVelocity;
+        tfodprocessor = new TfodProcessor.Builder()
+                .setMaxNumRecognitions(1)
+                .setUseObjectTracker(true)
+                .setTrackerMaxOverlap((float) 0.2)
+                .setTrackerMinSize(16)
+                .build();
+        VisionPortal.Builder builder = new VisionPortal.Builder();
+        builder.setCamera(hardwareMap.get(WebcamName.class, "webcam1"));
+        builder.addProcessor(tfodprocessor);
+        myVisionPortal = builder.build();
+
 
         M1 = hardwareMap.get(DcMotor.class, "M1");
         EncoderA = hardwareMap.get(DcMotor.class, "EncoderA");
@@ -74,14 +91,9 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
         IntakeR = hardwareMap.get(CRServo.class, "IntakeR");
 
         // Custom CenterStage Vision Processor
-        csVisionProcessor = CSVisionProcessor.getCSVision(213, 0, 267, 213, 267, 426, 267);
+        //csVisionProcessor = myVisionPortal.getCSVision(213, 0, 267, 213, 267, 426, 267);
         // Create a VisionPortal, with the specified webcam name and AprilTag processor, and assign it to a variable.
-        myVisionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "webcam1"), csVisionProcessor);
-        while (!isStarted() && !opModeIsActive()) {
-            // Returns the current starting postion
-            telemetry.addData("Position", CSVisionProcessor.getPosition());
-            telemetry.update();
-        }
+
         waitForStart();
         IMU2();
         LiftAndDiffSetup();
@@ -91,11 +103,12 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
         EncoderB.setDirection(DcMotor.Direction.REVERSE);
         C1 = 3;
         C2 = 0;
-        MaxVelocity = 1;
+        double MaxVelocity = 1;
         ErrorBand = 3;
         if (opModeIsActive()) {
             // Returns the current starting postion as an integer
-            if (CSVisionProcessor.getIntPosition() == 1) {
+            List<Recognition> currentRecognitions = tfodprocessor.getRecognitions();
+            if (currentRecognitions.get(0).estimateAngleToObject(AngleUnit.DEGREES) < 35 && currentRecognitions.get(0).estimateAngleToObject(AngleUnit.DEGREES) > -35) {
                 Outtake.setPosition(0);
                 RobotHeadingChange = 0;
                 sleep(200);
@@ -123,7 +136,7 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
                 requestOpModeStop();
             }
             // Returns the current starting postion as an integer
-            if (CSVisionProcessor.getIntPosition() == 2) {
+            if (currentRecognitions.get(0).estimateAngleToObject(AngleUnit.DEGREES) < -35) {
                 Outtake.setPosition(0);
                 RobotHeadingChange = 0;
                 sleep(200);
@@ -153,7 +166,7 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
                 requestOpModeStop();
             }
             // Returns the current starting postion as an integer
-            if (CSVisionProcessor.getIntPosition() == 3) {
+            if (currentRecognitions.get(0).estimateAngleToObject(AngleUnit.DEGREES) > 35) {
                 Outtake.setPosition(0);
                 RobotHeadingChange = 0;
                 sleep(200);
@@ -187,7 +200,7 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
     /**
      * Describe this function...
      */
-    private void Strafe(int Dist, int Deg, double Speed) {
+    private void Strafe(double Dist, int Deg, double Speed) {
         double EncoderDistAverage;
         int EncoderDistAverage_tare_;
 
@@ -238,7 +251,6 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
      */
     private void RotationModify() {
         int RotationDiffrence;
-        int RotInvert;
         int RotInvertException;
         int VelocityAuthority;
 
@@ -296,7 +308,6 @@ public class CloseRedAlliancePurpleYellowLeftPark extends LinearOpMode {
      */
     private void LiftAndDiffLoop() {
         boolean IsRightTriggerPressed;
-        double RightTrigger;
         boolean IsLeftTriggerPressed;
 
         telemetry.addData("Lift1Pos", Lift1.getCurrentPosition());
